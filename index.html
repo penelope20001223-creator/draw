@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>逐一抽籤</title>
+
+<style>
+body {
+    font-family: system-ui, sans-serif;
+    background: #f5f5f5;
+    padding: 20px;
+    text-align: center;
+}
+button {
+    width: 100%;
+    font-size: 20px;
+    padding: 16px;
+    margin: 12px 0;
+    border: none;
+    border-radius: 12px;
+    background: #4a90e2;
+    color: white;
+}
+button:disabled {
+    background: #bbb;
+}
+.result {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    margin-top: 20px;
+    font-size: 22px;
+}
+.small {
+    font-size: 16px;
+    color: #666;
+}
+</style>
+</head>
+
+<body>
+
+<h2>逐一抽籤</h2>
+
+<button id="boyBtn">開始抽 男生</button>
+<button id="girlBtn">開始抽 女生</button>
+<button id="drawBtn" disabled>🎲 抽下一位</button>
+
+<div class="result" id="result">請先選擇性別</div>
+
+<script>
+let people = [];
+let order = [];
+let index = 0;
+
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+}
+
+function start(gender) {
+    if (gender === "男") {
+        people = ["M1","M2","M3","M4","M5","M6"];
+        order = ["A","A","B","B","C","C"];
+    } else {
+        people = ["F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12"];
+        order = ["A","A","A","A","B","B","B","B","C","C","C","C"];
+    }
+
+    shuffle(people);
+    index = 0;
+    drawBtn.disabled = false;
+    result.innerHTML = `已開始抽 ${gender}生<br><span class="small">請按「抽下一位」</span>`;
+}
+
+function drawOne() {
+    if (index >= people.length) {
+        result.innerHTML = "🎉 已全部抽完";
+        drawBtn.disabled = true;
+        return;
+    }
+
+    result.innerHTML =
+        `抽出：<b>${people[index]}</b><br>👉 分到 <b>${order[index]} 組</b>`;
+    index++;
+}
+
+boyBtn.onclick = () => start("男");
+girlBtn.onclick = () => start("女");
+drawBtn.onclick = drawOne;
+</script>
+
+</body>
+</html>
