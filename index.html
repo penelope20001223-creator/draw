@@ -51,7 +51,7 @@ button:disabled {
 
 <script>
 let people = [];
-let order = [];
+let groups = [];
 let index = 0;
 
 function shuffle(arr) {
@@ -64,16 +64,22 @@ function shuffle(arr) {
 function start(gender) {
     if (gender === "男") {
         people = ["M1","M2","M3","M4","M5","M6"];
-        order = ["A","A","B","B","C","C"];
+        groups = ["A","A","B","B","C","C"];
     } else {
-        people = ["F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12"];
-        order = ["A","A","A","A","B","B","B","B","C","C","C","C"];
+        people = [
+            "F1","F2","F3","F4","F5","F6",
+            "F7","F8","F9","F10","F11","F12"
+        ];
+        groups = ["A","A","A","A","B","B","B","B","C","C","C","C"];
     }
 
-    shuffle(people);
+    shuffle(people);   // 人亂數
+    shuffle(groups);   // 組別也亂數
     index = 0;
+
     drawBtn.disabled = false;
-    result.innerHTML = `已開始抽 ${gender}生<br><span class="small">請按「抽下一位」</span>`;
+    result.innerHTML =
+        `已開始抽 ${gender}生<br><span class="small">每次人與組別皆隨機</span>`;
 }
 
 function drawOne() {
@@ -84,7 +90,9 @@ function drawOne() {
     }
 
     result.innerHTML =
-        `抽出：<b>${people[index]}</b><br>👉 分到 <b>${order[index]} 組</b>`;
+        `抽出：<b>${people[index]}</b><br>
+         👉 分到 <b>${groups[index]} 組</b>`;
+
     index++;
 }
 
@@ -92,6 +100,7 @@ boyBtn.onclick = () => start("男");
 girlBtn.onclick = () => start("女");
 drawBtn.onclick = drawOne;
 </script>
+
 
 </body>
 </html>
